@@ -30,16 +30,23 @@ export class GorillaLocomotion {
     this.bindXRInputs();
   }
   bindXRInputs(){
-    const session=this.renderer.xr.getSession();if(!session)return;
-    for(const source of session.inputSources){
+    const session=this.renderer.xr.getSession();
+    if(!session)return;
+    // XRInputSourceArray is iterable, but it is not a JavaScript Array.
+    // Convert it before using array methods.
+    const sources=Array.from(session.inputSources||[]);
+    for(const source of sources){
       if(source.gamepad){
         const index=source.handedness==='left'?0:1;
-        const select=()=>this.tryInteract();
-        // Select is the primary interaction; no vibration/haptics are used.
-        source.addEventListener?.('selectstart',select);
+        // Keep controller identity available for future input handling.
+        this.controllerSources=this.controllerSources||[];
+        this.controllerSources[index]=source;
       }
     }
-    session.addEventListener('inputsourceschange',()=>this.bindXRInputs());
+    if(!this.inputsChangeHandler){
+      this.inputsChangeHandler=()=>this.bindXRInputs();
+      session.addEventListener('inputsourceschange',this.inputsChangeHandler);
+    }
   }
   tryInteract(){
     const p=this.camera.getWorldPosition(new THREE.Vector3());
