@@ -30,6 +30,15 @@
     <footer><button id="outside">OPEN OUTSIDE</button><button id="home">HOME</button></footer>
   </section>
   <div id="touch-help">On phone: drag to look · use WASD on keyboard to test movement</div>
+  <div id="startup-error" role="alert" hidden style="position:fixed;z-index:99;inset:15% 5% auto;background:#2b1111;color:#fff;padding:18px;border:2px solid #ff7777;border-radius:12px;font:14px/1.5 Arial,sans-serif;white-space:pre-wrap"></div>
+  <script>
+    function showStartupError(message){
+      const box=document.getElementById('startup-error');
+      if(box){box.hidden=false;box.textContent='WILDHOP could not start:\\n'+message+'\\n\\nTry refreshing the page. If this keeps happening, send a screenshot of this message.';}
+    }
+    window.addEventListener('error',e=>showStartupError(e.message||'A script failed to load.'));
+    window.addEventListener('unhandledrejection',e=>showStartupError(e.reason?.message||String(e.reason||'A startup promise failed.')));
+  </script>
   <script type="module" src="./main.js"></script>
 </body>
 </html>
