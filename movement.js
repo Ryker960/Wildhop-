@@ -67,7 +67,7 @@ export class GorillaLocomotion {
     const session=this.renderer.xr.getSession();if(!session)return;
     const frame=this.renderer.xr.getFrame();if(!frame)return;
     const ref=this.renderer.xr.getReferenceSpace();if(!ref)return;
-    const sources=session.inputSources.filter(s=>s.gripSpace);
+    const sources=Array.from(session.inputSources||[]).filter(s=>s.gripSpace);
     sources.forEach((source)=>{
       const index=source.handedness==='left'?0:1;
       const pose=frame.getPose(source.gripSpace,ref);if(!pose)return;
