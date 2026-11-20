@@ -4,11 +4,14 @@ import {GorillaLocomotion} from './movement.js';
 import {LobbyBrowser} from './browser.js';
 import {Systems} from './systems.js';
 
-const renderer=new THREE.WebGLRenderer({antialias:true});
-renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+// Use a conservative WebGL setup for Quest Browser compatibility.
+const renderer=new THREE.WebGLRenderer({antialias:false,powerPreference:'high-performance'});
+renderer.setPixelRatio(1);
 renderer.setSize(innerWidth,innerHeight);
 renderer.xr.enabled=true;
-renderer.shadowMap.enabled=true;
+renderer.xr.setReferenceSpaceType('local-floor');
+renderer.xr.setFramebufferScaleFactor(0.8);
+renderer.shadowMap.enabled=false;
 document.body.appendChild(renderer.domElement);
 
 const camera=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,.1,150);
@@ -33,8 +36,6 @@ vrButton.addEventListener('click',async()=>{
     alert('WebXR is not available in this browser. Open this HTTPS page in the Meta Quest Browser.');
     return;
   }
-  // requestSession must be called directly from the button gesture.
-  // Waiting for isSessionSupported() first can lose the browser's user activation.
   try{
     const session=await navigator.xr.requestSession('immersive-vr',{
       optionalFeatures:['local-floor','bounded-floor','hand-tracking']
