@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="theme-color" content="#10251a">
+  <title>WILDHOP VR</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <div id="hud">
+    <div class="brand">WILDHOP <span>VR</span></div>
+    <div class="hint" id="hint">Walk up to the lobby computer and press E or your controller trigger.</div>
+    <button id="enter-vr">ENTER VR</button>
+  </div>
+  <section id="browser" aria-label="Lobby computer browser" hidden>
+    <header class="browser-top">
+      <strong>WILDHOP INTERNET</strong>
+      <button id="close-browser" aria-label="Close browser">✕</button>
+    </header>
+    <form id="address-form">
+      <button type="button" id="back" title="Back">←</button>
+      <button type="button" id="forward" title="Forward">→</button>
+      <button type="button" id="refresh" title="Refresh">↻</button>
+      <input id="address" value="https://www.google.com" autocomplete="off" aria-label="Search or enter website">
+      <button type="submit">GO</button>
+    </form>
+    <div class="browser-note">Some websites block being displayed inside another page. Use OPEN OUTSIDE if a page stays blank.</div>
+    <iframe id="webview" title="Internet page" src="https://www.google.com" allow="fullscreen; autoplay; encrypted-media; picture-in-picture"></iframe>
+    <footer><button id="outside">OPEN OUTSIDE</button><button id="home">HOME</button></footer>
+  </section>
+  <div id="touch-help">On phone: drag to look · use the on-screen pads to test movement</div>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
