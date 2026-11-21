@@ -10,32 +10,30 @@
 <body>
   <div id="hud">
     <div class="brand">WILDHOP <span>VR</span></div>
-    <div class="hint" id="hint">Walk up to the lobby computer and press E or your controller trigger.</div>
+    <div class="hint" id="hint">Explore the forest. Walk up to the vent and press E to verify staff access.</div>
+    <button id="staff-verify">VERIFY STAFF</button>
     <button id="enter-vr">ENTER VR</button>
   </div>
+  <aside id="staff-panel" aria-live="polite">
+    <strong>WILDHOP STAFF</strong>
+    <div id="staff-status">Not verified</div>
+    <div id="staff-badges">Badges: none</div>
+    <div id="staff-tools">Staff tools locked</div>
+  </aside>
   <section id="browser" aria-label="Lobby computer browser" hidden>
-    <header class="browser-top">
-      <strong>WILDHOP INTERNET</strong>
-      <button id="close-browser" aria-label="Close browser">✕</button>
-    </header>
+    <header class="browser-top"><strong>WILDHOP INTERNET</strong><button id="close-browser" aria-label="Close browser">✕</button></header>
     <form id="address-form">
-      <button type="button" id="back" title="Back">←</button>
-      <button type="button" id="forward" title="Forward">→</button>
-      <button type="button" id="refresh" title="Refresh">↻</button>
-      <input id="address" value="https://www.google.com" autocomplete="off" aria-label="Search or enter website">
-      <button type="submit">GO</button>
+      <button type="button" id="back" title="Back">←</button><button type="button" id="forward" title="Forward">→</button><button type="button" id="refresh" title="Refresh">↻</button>
+      <input id="address" value="https://www.google.com" autocomplete="off" aria-label="Search or enter website"><button type="submit">GO</button>
     </form>
     <div class="browser-note">Some websites block being displayed inside another page. Use OPEN OUTSIDE if a page stays blank.</div>
     <iframe id="webview" title="Internet page" src="https://www.google.com" allow="fullscreen; autoplay; encrypted-media; picture-in-picture"></iframe>
     <footer><button id="outside">OPEN OUTSIDE</button><button id="home">HOME</button></footer>
   </section>
-  <div id="touch-help">On phone: drag to look · use WASD on keyboard to test movement</div>
+  <div id="touch-help">On phone: drag to look · use WASD to move · walk to the vent and press E</div>
   <div id="startup-error" role="alert" hidden style="position:fixed;z-index:99;inset:15% 5% auto;background:#2b1111;color:#fff;padding:18px;border:2px solid #ff7777;border-radius:12px;font:14px/1.5 Arial,sans-serif;white-space:pre-wrap"></div>
   <script>
-    function showStartupError(message){
-      const box=document.getElementById('startup-error');
-      if(box){box.hidden=false;box.textContent='WILDHOP could not start:\\n'+message+'\\n\\nTry refreshing the page. If this keeps happening, send a screenshot of this message.';}
-    }
+    function showStartupError(message){const box=document.getElementById('startup-error');if(box){box.hidden=false;box.textContent='WILDHOP could not start:\\n'+message+'\\n\\nTry refreshing the page. If this keeps happening, send a screenshot of this message.';}}
     window.addEventListener('error',e=>showStartupError(e.message||'A script failed to load.'));
     window.addEventListener('unhandledrejection',e=>showStartupError(e.reason?.message||String(e.reason||'A startup promise failed.')));
   </script>
